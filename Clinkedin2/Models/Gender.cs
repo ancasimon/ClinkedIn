@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 
 namespace Clinkedin2.Model
 {
-    public class Gender
+    public enum Gender
     {
+        Female,
+        Male,
+        Unknown
     }
 }
