@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Clinkedin2.Models
 {
-    public class Warden : Person
+    public class Warden : User
     {
+        public new UserRole UserRole { get; } = UserRole.Warden;
     }
 }
