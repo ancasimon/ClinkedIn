@@ -22,51 +22,25 @@ namespace Clinkedin2.Controllers
             _repo = new UsersRepository();
         }
 
-        [HttpPost]
-        public IActionResult CreateUser(User newUser)
-        {
+        //ANCA: I was going to delete this from here but then thought that maybe we would want to have an admin who could create users??
+        //Ideally only that individual (inmate or warden) could create their record - but maybe they need an admin to help them get it started??...
+        //[HttpPost]
+        //public IActionResult CreateUser(User newUser)
+        //{
             
-            _repo.AddUser(newUser);
+        //    _repo.AddUser(newUser);
 
-            return Created($"/api/users/{newUser.Id}", newUser);
-        }
-
-        //ANCA: I will delete info below if we cannot have the 2 separate calls in the same Controller - will ask on Saturday!
-        //[HttpPost]
-        //public IActionResult CreateInmate(Inmate newInmate)
-        //{
-        //    //Anca: line below left over from trying to have separate classes for Inmate and User - will delete if we cannot do that.
-        //    //var newInmate = new User { FirstName = user.FirstName, LastName = user.LastName, Gender = user.Gender, PrisonFacility = user.PrisonFacility, DateOfBirth = user.DateOfBirth, UserRole = UserRole.Inmate };
-        //    if (newInmate.UserRole == UserRole.Inmate)
-        //    {
-        //        var repo = new UsersRepository();
-        //        repo.AddInmate(newInmate);
-
-        //        return Created($"/api/users/{newInmate.Id}", newInmate);
-        //    }
-        //    return NotFound();
-        //}
-        //[HttpPost]
-        //public IActionResult CreateWarden(Warden newWarden)
-        //{
-        //    if (newWarden.UserRole == UserRole.Warden)
-        //    {
-        //        var repo = new UsersRepository();
-        //        repo.AddWarden(newWarden);
-
-        //        return Created($"/api/users/{newWarden.Id}", newWarden);
-        //    }
-        //    return NotFound();
+        //    return Created($"/api/users/{newUser.Id}", newUser);
         //}
 
-        //ANCA: Currently, we have only 1 GET request for inmates only - if we wnat to get all uses (including wardens), we will have the same issue as with the 2 post methods ...
-        //We coudl create a separate WardensRepository ... is that the answer?
+      
+
         [HttpGet]
-        public IActionResult GetAllInmates()
+        public IActionResult GetUsers()
         {
-            var allInmates = _repo.GetInmates();
+            var allUsers = _repo.GetAllUsers();
 
-            return Ok(allInmates);
+            return Ok(allUsers);
         }
 
     }

@@ -14,12 +14,13 @@ namespace Clinkedin2.Model
         public Gender Gender { get; set; }
         public string PrisonFacility { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public UserRole UserRole { get; set; }
+        public UserRole UserRole { get; }
     }
 }
 
 public enum UserRole
 {
+    NotSet,
     Inmate,
     Warden
 }
