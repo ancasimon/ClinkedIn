@@ -9,24 +9,40 @@ namespace Clinkedin2.DataAccess
 {
     public class UsersRepository
     {
-        //static List<User> _inmates = new List<User>();
         static List<User> _users = new List<User>();
-        //static UsersRepository()
-        //{
-        //    _inmates = (List<User>)_users.Where(user => user.UserRole == UserRole.Inmate);
 
-        //}
-
-        public void AddInmate(User newInmate)
+        public void AddUser(User newUser)
         {
             var newId = 1;
-            if(_users.Count > 0)
+            if (_users.Count > 0)
             {
                 newId = _users.Select(u => u.Id).Max() + 1;
             }
-            newInmate.Id = newId;
-            _users.Add(newInmate);
+            newUser.Id = newId;
+            _users.Add(newUser);
         }
+
+        //ANCA: I will delete these 2 methods if we cannot have 2 post methods in the Controller!
+        //public void AddInmate(Inmate newInmate)
+        //{
+        //    var newId = 1;
+        //    if(_users.Count > 0)
+        //    {
+        //        newId = _users.Select(u => u.Id).Max() + 1;
+        //    }
+        //    newInmate.Id = newId;
+        //    _users.Add(newInmate);
+        //}
+        //public void AddWarden(Warden newWarden)
+        //{
+        //    var newId = 1;
+        //    if (_users.Count > 0)
+        //    {
+        //        newId = _users.Select(u => u.Id).Max() + 1;
+        //    }
+        //    newWarden.Id = newId;
+        //    _users.Add(newWarden);
+        //}
 
         public List<User> GetInmates()
         {
