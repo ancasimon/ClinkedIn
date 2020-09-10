@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Clinkedin2.DataAccess;
 using Clinkedin2.Model;
@@ -14,26 +15,29 @@ namespace Clinkedin2.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        UserRepository _repo;
+        //UsersRepository _repo;
 
-        public UsersController()
-        {
-            _repo = new UserRepository();
-        }
+        //public UsersController()
+        //{
+        //    _repo = new UsersRepository();
+        //}
 
         [HttpPost]
-        public IActionResult CreateInmate( Inmate newInmate)
+        public IActionResult CreateInmate( User newInmate)
         {
             //var newInmate = new User { FirstName = user.FirstName, LastName = user.LastName, Gender = user.Gender, PrisonFacility = user.PrisonFacility, DateOfBirth = user.DateOfBirth, UserRole = UserRole.Inmate };
             //newInmate.Id = _repo.Select(user => user.Id).Max() + 1;
-            _repo.Add(newInmate);
+            var repo = new UsersRepository();
+            repo.AddInmate(newInmate);
 
             return Created($"/api/users/{newInmate.Id}", newInmate);
         }
+
         [HttpGet]
         public IActionResult GetAllInmates()
         {
-            var allInmates = _repo.GetInmates();
+            var repo = new UsersRepository();
+            var allInmates = repo.GetInmates();
 
             return Ok(allInmates);
         }
