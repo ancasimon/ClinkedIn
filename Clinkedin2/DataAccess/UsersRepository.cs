@@ -25,8 +25,6 @@ namespace Clinkedin2.DataAccess
                 newId = _users.Select(u => u.Id).Max() + 1;
             }
             newInmate.Id = newId;
-            newInmate.UserRole = UserRole.Inmate;
-            //_inmates.Add(newInmate);
             _users.Add(newInmate);
         }
 
@@ -34,7 +32,7 @@ namespace Clinkedin2.DataAccess
         {
             var _inmates = _users.Where(user => user.UserRole == UserRole.Inmate);
 
-            return (List<User>)_inmates.ToList();
+            return _inmates.ToList();
         }
 
     }
