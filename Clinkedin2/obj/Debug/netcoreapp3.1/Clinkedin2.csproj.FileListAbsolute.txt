@@ -1,0 +1,5 @@
+C:\Users\bethh\source\repos\Clinkedin2\Clinkedin2\obj\Debug\netcoreapp3.1\Clinkedin2.csprojAssemblyReference.cache
+C:\Users\bethh\source\repos\Clinkedin2\Clinkedin2\obj\Debug\netcoreapp3.1\Clinkedin2.AssemblyInfoInputs.cache
+C:\Users\bethh\source\repos\Clinkedin2\Clinkedin2\obj\Debug\netcoreapp3.1\Clinkedin2.AssemblyInfo.cs
+C:\Users\bethh\source\repos\Clinkedin2\Clinkedin2\obj\Debug\netcoreapp3.1\Clinkedin2.csproj.CoreCompileInputs.cache
+C:\Users\bethh\source\repos\Clinkedin2\Clinkedin2\obj\Debug\netcoreapp3.1\Clinkedin2.MvcApplicationPartsAssemblyInfo.cache
