@@ -13,20 +13,18 @@ namespace Clinkedin2.Controllers
     [ApiController]
     public class WardensController : ControllerBase
     {
-        UsersRepository _wardensRepo;
-        UsersRepository _inmatesRepo;
+        UsersRepository _repo;
 
         public WardensController()
         {
-            _inmatesRepo = new UsersRepository();
-            _wardensRepo = new UsersRepository();
+            _repo = new UsersRepository();
         }
 
         [HttpPost]
         public IActionResult CreateWarden(Warden newWarden)
         {
 
-            _wardensRepo.AddWarden(newWarden);
+            _repo.AddWarden(newWarden);
 
             return Created($"/api/wardens/{newWarden.Id}", newWarden);
         }
@@ -34,7 +32,7 @@ namespace Clinkedin2.Controllers
         [HttpGet]
         public IActionResult GetAllInmates()
         {
-            var allInmates = _inmatesRepo.GetInmates();
+            var allInmates = _repo.GetInmates();
 
             return Ok(allInmates);
         }

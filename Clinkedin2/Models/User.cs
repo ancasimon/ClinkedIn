@@ -12,6 +12,7 @@ namespace Clinkedin2.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Gender Gender { get; set; }
+        public int Age { get; set; }
         public string PrisonFacility { get; set; }
         public DateTime DateOfBirth { get; set; }
         public UserRole UserRole { get; }
