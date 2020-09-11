@@ -27,13 +27,13 @@ namespace Clinkedin2.Controllers
         //[HttpPost]
         //public IActionResult CreateUser(User newUser)
         //{
-            
+
         //    _repo.AddUser(newUser);
 
         //    return Created($"/api/users/{newUser.Id}", newUser);
         //}
 
-      
+
 
         [HttpGet]
         public IActionResult GetUsers()
@@ -42,6 +42,7 @@ namespace Clinkedin2.Controllers
 
             return Ok(allUsers);
         }
+
 
     }
 }

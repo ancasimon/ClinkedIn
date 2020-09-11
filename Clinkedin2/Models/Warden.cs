@@ -8,6 +8,6 @@ namespace Clinkedin2.Models
 {
     public class Warden : User
     {
-        public new UserRole UserRole { get; } = UserRole.Warden;
+        public new UserRole UserRole { get; set; } = UserRole.Warden;
     }
 }
