@@ -31,5 +31,9 @@ public enum Interest
 
 public enum Services
 {
-
+    tutor,
+    trainer,
+    beautician,
+    writer,
+    legal
 }

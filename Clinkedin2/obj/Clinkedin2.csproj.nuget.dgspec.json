@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ancuta\\source\\repos\\groupE11\\clinkedin\\ClinkedIn-Sophia\\Clinkedin2\\Clinkedin2.csproj": {}
+    "C:\\Users\\bethh\\source\\repos\\ClinkedIn-Sophia\\Clinkedin2\\Clinkedin2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ancuta\\source\\repos\\groupE11\\clinkedin\\ClinkedIn-Sophia\\Clinkedin2\\Clinkedin2.csproj": {
+    "C:\\Users\\bethh\\source\\repos\\ClinkedIn-Sophia\\Clinkedin2\\Clinkedin2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ancuta\\source\\repos\\groupE11\\clinkedin\\ClinkedIn-Sophia\\Clinkedin2\\Clinkedin2.csproj",
+        "projectUniqueName": "C:\\Users\\bethh\\source\\repos\\ClinkedIn-Sophia\\Clinkedin2\\Clinkedin2.csproj",
         "projectName": "Clinkedin2",
-        "projectPath": "C:\\Users\\Ancuta\\source\\repos\\groupE11\\clinkedin\\ClinkedIn-Sophia\\Clinkedin2\\Clinkedin2.csproj",
-        "packagesPath": "C:\\Users\\Ancuta\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ancuta\\source\\repos\\groupE11\\clinkedin\\ClinkedIn-Sophia\\Clinkedin2\\obj\\",
+        "projectPath": "C:\\Users\\bethh\\source\\repos\\ClinkedIn-Sophia\\Clinkedin2\\Clinkedin2.csproj",
+        "packagesPath": "C:\\Users\\bethh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\bethh\\source\\repos\\ClinkedIn-Sophia\\Clinkedin2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Ancuta\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\bethh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -39,5 +39,13 @@ namespace Clinkedin2.Controllers
             return Ok(allInmates);
         }
 
+     /*   [HttpGet]
+        public IActionResult GetAllInmatesByServices()
+        {
+            var allInmates = _inmatesRepo.GetInmates();
+
+            return Ok(allInmates);
+        }*/
+
     }
 }
