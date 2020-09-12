@@ -4,7 +4,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Clinkedin2.DataAccess;
-using Clinkedin2.Model;
 using Clinkedin2.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,13 +26,13 @@ namespace Clinkedin2.Controllers
         //[HttpPost]
         //public IActionResult CreateUser(User newUser)
         //{
-            
+
         //    _repo.AddUser(newUser);
 
         //    return Created($"/api/users/{newUser.Id}", newUser);
         //}
 
-      
+
 
         [HttpGet]
         public IActionResult GetUsers()
@@ -42,6 +41,7 @@ namespace Clinkedin2.Controllers
 
             return Ok(allUsers);
         }
+
 
     }
 }
