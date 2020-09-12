@@ -11,6 +11,7 @@ namespace Clinkedin2.Models
         public Interest Interests { get; set; }
         public List<User> Friends { get; set; }
         public List<User> Enemies { get; set; }
+        public List<Services> InmateServices { get; set; }
         public Services Services { get; set; }
         public DateTime SentenceStartDate { get; set; }
         public DateTime SentenceEndDate { get; set; }

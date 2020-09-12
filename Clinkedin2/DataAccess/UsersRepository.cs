@@ -44,5 +44,11 @@ namespace Clinkedin2.DataAccess
             return _users;
         }
 
+/*        public List<Services> GetServices(int id)
+        {
+            var _inmate = _users.Where(user => user.Id == id);
+
+            return _inmate.ToList().First().GetAllServicesByInmate(id);
+        }*/
     }
 }
