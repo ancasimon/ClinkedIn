@@ -50,8 +50,7 @@ namespace Clinkedin2.Controllers
             var newFriend = _inmatesRepo.GetById(newFriendId);
             selectedInmate.Friends.Add(newFriend);
 
-            //return Created($"/api/inmates/{id}", selectedInmate);
-            return Ok($"{selectedInmate.FirstName} now has a new friend ({newFriend.FirstName} {newFriend.LastName}!");
+            return Ok($"{selectedInmate.FirstName} now has a new friend ({newFriend.FirstName} {newFriend.LastName})!");
 
         }
 
