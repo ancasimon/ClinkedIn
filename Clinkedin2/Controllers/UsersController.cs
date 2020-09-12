@@ -29,7 +29,14 @@ namespace Clinkedin2.Controllers
 
             return Ok(allUsers);
         }
+       
+        [HttpGet("{id}/interest")]
+        public IActionResult GetInterest(int id)
+        {
+            var repo = new UsersRepository();
+            var matchedInterestUsers = repo.GetInterest(id);
+            return Ok(matchedInterestUsers);
 
-
+        }
     }
 }

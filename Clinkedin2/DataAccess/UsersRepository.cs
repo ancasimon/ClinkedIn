@@ -89,6 +89,7 @@ namespace Clinkedin2.DataAccess
         }
 
 
+
         public int CalculateRemainingSentenceDays(int id)
         {
             var currentInmates = GetInmates();
@@ -109,6 +110,29 @@ namespace Clinkedin2.DataAccess
             var daysCompleted = currentDate - inmateStartDate;
 
             return (int)daysCompleted;
+        }
+
+        public List<User> GetInterest(int id)//must pass this in
+        {
+            var userInterest = _users.FirstOrDefault(user => user.Id == id)?.Interest;//prevents null error
+            var _matchingInterest = _users.Where(user => userInterest == user.Interest && user.Id != id); // add this && to prevent from getting yourself
+
+            return _matchingInterest.ToList();
+        }
+        //Monique added Enemy getter
+        public List<User> GetMyEnemies(int id)
+        {
+            var userLoggedIn = _users.First(User => User.Id == id);
+            var userEnemies = userLoggedIn.Enemies;
+            return userEnemies;
+        }
+
+        public void AddEnemies(int id, Inmate newEnemies)
+        {
+            var userLoggedIn = _users.First(User => User.Id == id);
+            var userEnemies = userLoggedIn.Enemies;
+            userEnemies.Add(newEnemies);
+
         }
     }
 }
