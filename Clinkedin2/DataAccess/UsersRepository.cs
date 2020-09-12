@@ -80,5 +80,12 @@ namespace Clinkedin2.DataAccess
 
             userFriends.Add(newFriend);
         }
+        public List<User> GetInterest(int id)//must pass this in
+        {
+            var userInterest = _users.FirstOrDefault(user => user.Id == id)?.Interest;//prevents null error
+            var _matchingInterest = _users.Where(user => userInterest == user.Interest && user.Id != id); // add this && to prevent from getting yourself
+
+            return _matchingInterest.ToList();
+        }
     }
 }
