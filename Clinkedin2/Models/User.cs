@@ -19,6 +19,7 @@ namespace Clinkedin2.Models
         public UserRole UserRole { get; set; }
         public List<User> Friends { get; set; } = new List<User>();
         public List<User> Enemies { get; set; } = new List<User>();
+        public string Interest { get; set; }
 
     }
 }
