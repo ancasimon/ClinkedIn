@@ -37,8 +37,7 @@ namespace Clinkedin2.Controllers
         public IActionResult CreateInmate(Inmate newInmate)
         {
             
-            var repo = new UsersRepository();
-            repo.AddInmate(newInmate);
+            _inmatesRepo.AddInmate(newInmate);
 
             return Created($"/api/inmates/{newInmate.Id}", newInmate);
         }
