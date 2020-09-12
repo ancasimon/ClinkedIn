@@ -1,5 +1,4 @@
-﻿using Clinkedin2.Model;
-using Clinkedin2.Models;
+﻿using Clinkedin2.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,12 +65,20 @@ namespace Clinkedin2.DataAccess
             return userToUpdate;
         }
 
-        public List<Inmate> GetMyFriends(int id)
+        public List<User> GetMyFriends(int id)
         {
             var userLoggedIn = _users.First(User => User.Id == id);
             var userFriends = userLoggedIn.Friends;
 
             return userFriends;
+        }
+
+        public void AddFriend(int id, Inmate newFriend)
+        {
+            var userLoggedIn = _users.First(User => User.Id == id);
+            var userFriends = userLoggedIn.Friends;
+
+            userFriends.Add(newFriend);
         }
     }
 }

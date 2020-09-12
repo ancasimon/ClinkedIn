@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Clinkedin2.Models;
 
-namespace Clinkedin2.Model
+namespace Clinkedin2.Models
 {
     public class User
     {
@@ -17,7 +17,8 @@ namespace Clinkedin2.Model
         public string PrisonFacility { get; set; }
         public DateTime DateOfBirth { get; set; }
         public UserRole UserRole { get; set; }
-        public List<Inmate> Friends { get; set; } = new List<Inmate>();
+        public List<User> Friends { get; set; } = new List<User>();
+        public List<User> Enemies { get; set; } = new List<User>();
 
     }
 }

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Clinkedin2.DataAccess;
 using Clinkedin2.Models;
-using Clinkedin2.Model;
 
 namespace Clinkedin2.Controllers
 {
@@ -20,11 +19,11 @@ namespace Clinkedin2.Controllers
         {
             _inmatesRepo = new UsersRepository();
 
-            var inmatePiper = new Inmate { Id = 1, Age = 30, FirstName = "Piper", LastName = "Chapman", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<Inmate>(), Enemies = new List<Inmate>(), UserRole = UserRole.Inmate };
-            var inmateClaudette = new Inmate { Id = 2, Age = 50, FirstName = "Claudette", LastName = "Pelage", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<Inmate>() { inmatePiper }, Enemies = new List<Inmate>(), UserRole = UserRole.Inmate };
-            var inmateGalina = new Inmate { Id = 3, Age = 55, FirstName = "Galina", LastName = "Reznikov", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<Inmate>() { inmateClaudette, inmatePiper }, Enemies = new List<Inmate>(), UserRole = UserRole.Inmate };
-            var inmateJane = new Inmate { Id = 4, Age = 25, FirstName = "Jane", LastName = "Miller", Gender = Gender.Female, PrisonFacility = "Tennessee Prison for Women", Friends = new List<Inmate>(), Enemies = new List<Inmate>(), UserRole = UserRole.Inmate };
-            var inmateDahlia = new Inmate { Id = 5, Age = 42, FirstName = "Dahlia", LastName = "McLeary", Gender = Gender.Female, PrisonFacility = "Tennessee Prison for Women", Friends = new List<Inmate>() { inmateJane }, Enemies = new List<Inmate>(), UserRole = UserRole.Inmate };
+            var inmatePiper = new Inmate { Id = 1, Age = 30, FirstName = "Piper", LastName = "Chapman", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<User>(), Enemies = new List<User>(), UserRole = UserRole.Inmate };
+            var inmateClaudette = new Inmate { Id = 2, Age = 50, FirstName = "Claudette", LastName = "Pelage", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<User>() { inmatePiper }, Enemies = new List<User>(), UserRole = UserRole.Inmate };
+            var inmateGalina = new Inmate { Id = 3, Age = 55, FirstName = "Galina", LastName = "Reznikov", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<User>() { inmateClaudette, inmatePiper }, Enemies = new List<User>(), UserRole = UserRole.Inmate };
+            var inmateJane = new Inmate { Id = 4, Age = 25, FirstName = "Jane", LastName = "Miller", Gender = Gender.Female, PrisonFacility = "Tennessee Prison for Women", Friends = new List<User>(), Enemies = new List<User>(), UserRole = UserRole.Inmate };
+            var inmateDahlia = new Inmate { Id = 5, Age = 42, FirstName = "Dahlia", LastName = "McLeary", Gender = Gender.Female, PrisonFacility = "Tennessee Prison for Women", Friends = new List<User>() { inmateJane }, Enemies = new List<User>(), UserRole = UserRole.Inmate };
 
             _inmatesRepo.AddInmate(inmateDahlia);
             _inmatesRepo.AddInmate(inmateJane);
@@ -44,13 +43,25 @@ namespace Clinkedin2.Controllers
             return Created($"/api/inmates/{newInmate.Id}", newInmate);
         }
 
-        //[HttpGet] //ANCA: Commenting this out for now since I don't know if it is ok to have 2 GET methods in the same Controller?!
-        //public IActionResult GetAllInmates(UserRole userRole)
-        //{
-        //    var allInmates = _inmatesRepo.GetInmates(UserRole.Inmate);
+        //api/inmates/1/friends/5
+        [HttpPost("{id}/friends/{newFriendId}")]
+        public IActionResult AddFriend(int id, int newFriendId)
+        {
+            var selectedInmate = _inmatesRepo.GetById(id);
+            var newFriend = _inmatesRepo.GetById(newFriendId);
+            selectedInmate.Friends.Add(newFriend);
 
-        //    return Ok(allInmates);
-        //}
+            //return Created($"/api/inmates/{id}", selectedInmate);
+            return Ok($"{selectedInmate.Friends.ToList()}");
+
+        }
+
+        public IActionResult GetAllInmates(UserRole userRole)
+        {
+            var allInmates = _inmatesRepo.GetInmates(UserRole.Inmate);
+
+            return Ok(allInmates);
+        }
 
         [HttpPut("{id}")]
         public IActionResult UpdateInmate(int id, User inmate)
@@ -62,11 +73,17 @@ namespace Clinkedin2.Controllers
 
 
         [HttpGet("{id}")]
-        public IActionResult GetFriends(int id)
+        public IActionResult GetUserById(int id)
         {
-            var myFriends = _inmatesRepo.GetMyFriends(id);
+            var selectedUser = _inmatesRepo.GetById(id);
 
-            return Ok(myFriends);
+            return Ok(selectedUser);
         }
+        //public IActionResult GetFriends(int id)
+        //{
+        //    var myFriends = _inmatesRepo.GetMyFriends(id);
+
+        //    return Ok(myFriends);
+        //}
     }
 }
