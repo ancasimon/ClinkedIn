@@ -77,11 +77,5 @@ namespace Clinkedin2.Controllers
 
             return Ok(selectedUser);
         }
-        //public IActionResult GetFriends(int id)
-        //{
-        //    var myFriends = _inmatesRepo.GetMyFriends(id);
-
-        //    return Ok(myFriends);
-        //}
     }
 }

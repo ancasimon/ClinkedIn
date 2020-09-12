@@ -21,18 +21,6 @@ namespace Clinkedin2.Controllers
             _repo = new UsersRepository();
         }
 
-        //ANCA: I was going to delete this from here but then thought that maybe we would want to have an admin who could create users??
-        //Ideally only that individual (inmate or warden) could create their record - but maybe they need an admin to help them get it started??...
-        //[HttpPost]
-        //public IActionResult CreateUser(User newUser)
-        //{
-
-        //    _repo.AddUser(newUser);
-
-        //    return Created($"/api/users/{newUser.Id}", newUser);
-        //}
-
-
 
         [HttpGet]
         public IActionResult GetUsers()
