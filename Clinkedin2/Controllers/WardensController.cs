@@ -29,12 +29,14 @@ namespace Clinkedin2.Controllers
             return Created($"/api/wardens/{newWarden.Id}", newWarden);
         }
 
-        //[HttpGet]
-        //public IActionResult GetAllInmates()
-        //{
-        //    var allInmates = _repo.GetInmates();
+        [HttpGet]
+        public IActionResult GetAllInmates(UserRole userRole)
+        {
+            var allInmates = _repo.GetInmates(UserRole.Inmate);
 
-        //    return Ok(allInmates);
-        //}
+            return Ok(allInmates);
+        }
+
+        
     }
 }
