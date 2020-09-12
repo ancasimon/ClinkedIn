@@ -5,12 +5,9 @@ using System.Threading.Tasks;
 
 namespace Clinkedin2.Models
 {
-    public class Warden : User
+    public class ViewFriendsCommand
     {
-        public Warden()
-        {
-            UserRole = UserRole.Warden;
+        public List<Inmate> Friends {get; set;}
 
-        }
     }
 }
