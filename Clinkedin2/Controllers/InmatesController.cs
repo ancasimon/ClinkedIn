@@ -19,11 +19,11 @@ namespace Clinkedin2.Controllers
         {
             _inmatesRepo = new UsersRepository();
 
-            var inmatePiper = new Inmate { Id = 1, Age = 30, FirstName = "Piper", LastName = "Chapman", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<User>(), Enemies = new List<User>(), UserRole = UserRole.Inmate };
-            var inmateClaudette = new Inmate { Id = 2, Age = 50, FirstName = "Claudette", LastName = "Pelage", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<User>() { inmatePiper }, Enemies = new List<User>(), UserRole = UserRole.Inmate };
-            var inmateGalina = new Inmate { Id = 3, Age = 55, FirstName = "Galina", LastName = "Reznikov", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<User>() { inmateClaudette, inmatePiper }, Enemies = new List<User>(), UserRole = UserRole.Inmate };
-            var inmateJane = new Inmate { Id = 4, Age = 25, FirstName = "Jane", LastName = "Miller", Gender = Gender.Female, PrisonFacility = "Tennessee Prison for Women", Friends = new List<User>(), Enemies = new List<User>(), UserRole = UserRole.Inmate };
-            var inmateDahlia = new Inmate { Id = 5, Age = 42, FirstName = "Dahlia", LastName = "McLeary", Gender = Gender.Female, PrisonFacility = "Tennessee Prison for Women", Friends = new List<User>() { inmateJane }, Enemies = new List<User>(), UserRole = UserRole.Inmate };
+            var inmatePiper = new Inmate { Id = 1, Age = 30, FirstName = "Piper", LastName = "Chapman", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<User>(), Enemies = new List<User>(), UserRole = UserRole.Inmate, Interest ="Sports", Services= "tutor"};
+            var inmateClaudette = new Inmate { Id = 2, Age = 50, FirstName = "Claudette", LastName = "Pelage", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<User>() { inmatePiper }, Enemies = new List<User>(), UserRole = UserRole.Inmate , Interest ="Music", Services = "legal" };
+            var inmateGalina = new Inmate { Id = 3, Age = 55, FirstName = "Galina", LastName = "Reznikov", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<User>() { inmateClaudette, inmatePiper }, Enemies = new List<User>(), UserRole = UserRole.Inmate , Interest = "Reading", Services = "trainer" };
+            var inmateJane = new Inmate { Id = 4, Age = 25, FirstName = "Jane", LastName = "Miller", Gender = Gender.Female, PrisonFacility = "Tennessee Prison for Women", Friends = new List<User>(), Enemies = new List<User>(), UserRole = UserRole.Inmate, Interest = "Cars", Services = "beautician" };
+            var inmateDahlia = new Inmate { Id = 5, Age = 42, FirstName = "Dahlia", LastName = "McLeary", Gender = Gender.Female, PrisonFacility = "Tennessee Prison for Women", Friends = new List<User>() { inmateJane }, Enemies = new List<User>(), UserRole = UserRole.Inmate, Interest = "Sports", Services = "writer" };
 
             _inmatesRepo.AddInmate(inmateDahlia);
             _inmatesRepo.AddInmate(inmateJane);
@@ -61,7 +61,6 @@ namespace Clinkedin2.Controllers
             return Ok(allInmates);
         }
 
-<<<<<<< HEAD
         /* [HttpGet]
          public IActionResult GetAllServicesByInmate(User user)
          {
@@ -69,7 +68,6 @@ namespace Clinkedin2.Controllers
          }
         */
 
-=======
         [HttpPut("{id}")]
         public IActionResult UpdateInmate(int id, User inmate)
         {
@@ -86,12 +84,18 @@ namespace Clinkedin2.Controllers
 
             return Ok(selectedUser);
         }
-        //public IActionResult GetFriends(int id)
-        //{
-        //    var myFriends = _inmatesRepo.GetMyFriends(id);
+        //Monique added Enemy search 
+        [HttpPost("{id}/enemies/{newEnemiesId}")]
+        public IActionResult AddEnemies(int id, int newEnemiesId)
+        {
+            var selectedInmate = _inmatesRepo.GetById(id);
+            var newEnemies = _inmatesRepo.GetById(newEnemiesId);
+            selectedInmate.Enemies.Add(newEnemies);
 
         //    return Ok(myFriends);
         //}
->>>>>>> master
+            return Ok($"{selectedInmate.FirstName} now has a new enemy ({newEnemies.FirstName} {newEnemies.LastName})!");
+
+        }
     }
 }
