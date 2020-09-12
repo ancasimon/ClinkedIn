@@ -51,7 +51,7 @@ namespace Clinkedin2.Controllers
             selectedInmate.Friends.Add(newFriend);
 
             //return Created($"/api/inmates/{id}", selectedInmate);
-            return Ok($"{selectedInmate.Friends.ToList()}");
+            return Ok($"{selectedInmate.FirstName} now has a new friend ({newFriend.FirstName} {newFriend.LastName}!");
 
         }
 
