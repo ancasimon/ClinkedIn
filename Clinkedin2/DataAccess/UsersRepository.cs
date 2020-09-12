@@ -87,5 +87,20 @@ namespace Clinkedin2.DataAccess
 
             return _matchingInterest.ToList();
         }
+        //Monique added Enemy getter
+        public List<User> GetMyEnemies(int id)
+        {
+            var userLoggedIn = _users.First(User => User.Id == id);
+            var userEnemies = userLoggedIn.Enemies;
+            return userEnemies;
+        }
+
+        public void AddEnemies(int id, Inmate newEnemies)
+        {
+            var userLoggedIn = _users.First(User => User.Id == id);
+            var userEnemies = userLoggedIn.Enemies;
+            userEnemies.Add(newEnemies);
+
+        }
     }
 }

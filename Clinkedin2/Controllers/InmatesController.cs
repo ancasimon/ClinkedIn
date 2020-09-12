@@ -77,5 +77,16 @@ namespace Clinkedin2.Controllers
 
             return Ok(selectedUser);
         }
+        //Monique added Enemy search 
+        [HttpPost("{id}/enemies/{newEnemiesId}")]
+        public IActionResult AddEnemies(int id, int newEnemiesId)
+        {
+            var selectedInmate = _inmatesRepo.GetById(id);
+            var newEnemies = _inmatesRepo.GetById(newEnemiesId);
+            selectedInmate.Enemies.Add(newEnemies);
+
+            return Ok($"{selectedInmate.FirstName} now has a new enemy ({newEnemies.FirstName} {newEnemies.LastName})!");
+
+        }
     }
 }
