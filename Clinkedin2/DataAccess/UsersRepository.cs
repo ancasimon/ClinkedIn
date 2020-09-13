@@ -75,7 +75,6 @@ namespace Clinkedin2.DataAccess
         //ANCA: Using the method below to display one's friends:
         public List<String> GetMyFriends(int id)
         {
-            //var userLoggedIn = _users.First(User => User.Id == id);
             var allInmates = GetInmates();
             var userLoggedIn = allInmates.First(i => i.Id == id);
             var userFriends = userLoggedIn.Friends;

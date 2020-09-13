@@ -75,7 +75,7 @@ namespace Clinkedin2.Controllers
 
         }
 
-        //ANCA: Added ability to delete a friend: ANCA: THIS does not work if I add a friends manually to a new record!!!! it does not delete them...
+        //ANCA: Added ability to delete a friend: ANCA: THIS does not work if I add a friends manually to a new record!!!! it does not delete them... Logged a bug for it.
         [HttpDelete("{id}/friends/{friendToDeleteId}")]
         public IActionResult DeleteFriend(int id, int friendToDeleteId)
         {
