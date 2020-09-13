@@ -32,7 +32,7 @@ namespace Clinkedin2.Controllers
         [HttpGet]
         public IActionResult GetAllInmates(UserRole userRole)
         {
-            var allInmates = _repo.GetInmates(UserRole.Inmate);
+            var allInmates = _repo.GetInmates();
 
             return Ok(allInmates);
         }

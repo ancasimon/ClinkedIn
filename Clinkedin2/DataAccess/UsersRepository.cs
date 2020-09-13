@@ -1,4 +1,5 @@
 ﻿using Clinkedin2.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,12 +37,18 @@ namespace Clinkedin2.DataAccess
             }
             _users.Add(newWarden);
         }
-
-        public List<User> GetInmates(UserRole userRole) //ANCA: Any way I can make this a list of Inmates - so that it can return the inmate-specific properties? I get the conversion error that it cannot change User to Inmate error ....
+        //ANCA Note on Sat: I changed this to a type of Inmate so that I can get the sentence info from the records. Hoping this is a right way to do this!
+        public List<Inmate> GetInmates() //ANCA: Any way I can make this a list of Inmates - so that it can return the inmate-specific properties? I get the conversion error that it cannot change User to Inmate error ....
         {
-            var _inmates = _users.Where(user => user.UserRole == userRole);
+            var _inmates = _users.Where(user => user.UserRole == UserRole.Inmate);
+            List<Inmate> inmateClassRecords = new List<Inmate>();
+            foreach (var inmate in _inmates)
+            {
+                var inmateClassRecord = (Inmate)Convert.ChangeType(inmate, typeof(Inmate));
+                inmateClassRecords.Add(inmateClassRecord);
+            }
 
-            return _inmates.ToList();
+            return inmateClassRecords.ToList();
         }
 
         public List<User> GetAllUsers()
@@ -80,6 +87,31 @@ namespace Clinkedin2.DataAccess
 
             userFriends.Add(newFriend);
         }
+
+
+
+        public int CalculateRemainingSentenceDays(int id)
+        {
+            var currentInmates = GetInmates();
+            var userLoggedIn = currentInmates.First(User => User.Id == id);
+            var inmateEndDate = userLoggedIn.SentenceEndDate.ToOADate();
+            var currentDate = DateTime.Now.ToOADate();
+            var daysRemaining = inmateEndDate - currentDate;
+
+            return (int)daysRemaining;
+        }
+
+        public int CalculateCompletedSentenceDays(int id)
+        {
+            var currentInmates = GetInmates();
+            var userLoggedIn = currentInmates.First(User => User.Id == id);
+            var inmateStartDate = userLoggedIn.SentenceStartDate.ToOADate();
+            var currentDate = DateTime.Now.ToOADate();
+            var daysCompleted = currentDate - inmateStartDate;
+
+            return (int)daysCompleted;
+        }
+
         public List<User> GetInterest(int id)//must pass this in
         {
             var userInterest = _users.FirstOrDefault(user => user.Id == id)?.Interest;//prevents null error
