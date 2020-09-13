@@ -38,7 +38,7 @@ namespace Clinkedin2.DataAccess
             _users.Add(newWarden);
         }
         //ANCA Note on Sat: I changed this to a type of Inmate so that I can get the sentence info from the records. Hoping this is a right way to do this!
-        public List<Inmate> GetInmates() //ANCA: Any way I can make this a list of Inmates - so that it can return the inmate-specific properties? I get the conversion error that it cannot change User to Inmate error ....
+        public List<Inmate> GetInmates() 
         {
             var _inmates = _users.Where(user => user.UserRole == UserRole.Inmate);
             List<Inmate> inmateClassRecords = new List<Inmate>();
@@ -72,23 +72,43 @@ namespace Clinkedin2.DataAccess
             return userToUpdate;
         }
 
-        public List<User> GetMyFriends(int id)
+        //ANCA: Using the method below to display one's friends:
+        public List<String> GetMyFriends(int id)
         {
-            var userLoggedIn = _users.First(User => User.Id == id);
+            //var userLoggedIn = _users.First(User => User.Id == id);
+            var allInmates = GetInmates();
+            var userLoggedIn = allInmates.First(i => i.Id == id);
             var userFriends = userLoggedIn.Friends;
+            string friendName;
+            List<string> friendNames = new List<string>(); //to display just their names, I am copying them to strings and putting them in a list.
+            foreach (var person in userFriends)
+            {
+                friendName = person.FirstName.ToString();
+                friendNames.Add(friendName);
+            }
 
-            return userFriends;
+            return friendNames;
         }
 
-        public void AddFriend(int id, Inmate newFriend)
-        {
-            var userLoggedIn = _users.First(User => User.Id == id);
-            var userFriends = userLoggedIn.Friends;
+        //ANCA: Not using this one either ....SHOULD I BE??
+        //public void AddFriend(int id, Inmate newFriend)
+        //{
+        //    var userLoggedIn = _users.First(User => User.Id == id);
+        //    var userFriends = userLoggedIn.Friends;
 
-            userFriends.Add(newFriend);
-        }
+        //    userFriends.Add(newFriend);
+        //}
+
+        //ANCA: Added ability to delete a friend.BUT I Am not actually using it - shoudl I be?? Will delete it if this is ok. 
+        //public void DeleteFriend(int id)
+        //{
+        //    var friendToDelete = GetById(id);
+        //    var userLoggedIn = _users.First(User => User.Id == id);
+        //    userLoggedIn.Friends.Remove(friendToDelete);
+        //}
 
 
+        //ANCA: Calculations for number of days since the sentence started and until it ends below. I am converting a User type to an Inmate type so that I can access Inmate-specific properties such as sentence dates.
 
         public int CalculateRemainingSentenceDays(int id)
         {
