@@ -63,9 +63,9 @@ namespace Clinkedin2.Controllers
         }
 
         [HttpGet("{id}/services")]
-        public IActionResult GetAllServicesByInmate(User user)
+        public IActionResult GetAllServicesByInmate(int id)
         {
-            var services = _inmatesRepo.GetServices(user.Id);
+            var services = _inmatesRepo.GetServices(id);
 
             return Ok(services);
         }
