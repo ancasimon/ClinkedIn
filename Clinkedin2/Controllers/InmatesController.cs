@@ -35,7 +35,7 @@ namespace Clinkedin2.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateInmate(Inmate newInmate)
+        public IActionResult CreateInmate(Inmate newInmate) //ANCA: Is there any way to prevent users from setting friends who are not in the network when creating a record??
         {
 
             _inmatesRepo.AddInmate(newInmate);
@@ -43,16 +43,51 @@ namespace Clinkedin2.Controllers
             return Created($"/api/inmates/{newInmate.Id}", newInmate);
         }
 
+
+        //ANCA: Ability to view one's friends:
+        [HttpGet("{id}/friends")]
+        public IActionResult ViewFriends(int id)
+        {
+            var selectedInmate = _inmatesRepo.GetById(id);
+            var selectedInmateFriends = _inmatesRepo.GetMyFriends(id);
+
+            return Ok($"Here are {selectedInmate.FirstName}'s friends: {string.Join(",", selectedInmateFriends)}.");
+
+        }
+
+
+        //ANCA: Ability to add a new friend:
         //api/inmates/1/friends/5
         [HttpPost("{id}/friends/{newFriendId}")]
         public IActionResult AddFriend(int id, int newFriendId)
         {
             var selectedInmate = _inmatesRepo.GetById(id);
             var newFriend = _inmatesRepo.GetById(newFriendId);
-            selectedInmate.Friends.Add(newFriend);
-
+            if (newFriend == null )
+            {
+                return NotFound(); //Anca: Added some validation to make sure the new friend to be added is already in the network. 
+            }
+            else
+            {
+                selectedInmate.Friends.Add(newFriend);
+            }
             return Ok($"{selectedInmate.FirstName} now has a new friend ({newFriend.FirstName} {newFriend.LastName})!");
 
+        }
+
+        //ANCA: Added ability to delete a friend: ANCA: THIS does not work if I add a friends manually to a new record!!!! it does not delete them... Logged a bug for it.
+        [HttpDelete("{id}/friends/{friendToDeleteId}")]
+        public IActionResult DeleteFriend(int id, int friendToDeleteId)
+        {
+            var selectedInmate = _inmatesRepo.GetById(id);
+            var friendToDelete = _inmatesRepo.GetById(friendToDeleteId);
+            if (friendToDelete == null)
+            {
+                return NotFound();
+            }
+            selectedInmate.Friends.Remove(friendToDelete);
+
+            return Ok($"{friendToDelete.FirstName} {friendToDelete.LastName} is no longer {selectedInmate.FirstName} {selectedInmate.LastName}'s friend. She'd better watch her back!");
         }
 
         public IActionResult GetAllInmates()
@@ -79,6 +114,7 @@ namespace Clinkedin2.Controllers
             return Ok(selectedUser);
         }
 
+        //ANCA: Calculations for number of days since the sentence started and until it ends. I am converting a User type to an Inmate type so that I can access Inmate-specific properties such as sentence dates.
         [HttpGet("{id}/days")]
         public IActionResult CalculateDays(int id)
         {
