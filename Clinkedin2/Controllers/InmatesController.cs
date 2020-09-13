@@ -55,6 +55,21 @@ namespace Clinkedin2.Controllers
 
         }
 
+        [HttpGet("{id}/friendconnections")]
+        public IActionResult ViewFriendsOfFriends(int id)
+        {
+            var selectedInmate = _inmatesRepo.GetById(id);
+            Dictionary<string, List<string>> friendConnections = _inmatesRepo.GetFriendsOfFriends(id);
+
+            if(friendConnections == null)
+            {
+                return NotFound($"{selectedInmate.FirstName} {selectedInmate.LastName} doesn't have any friends.");
+            }
+
+            return Ok($"Here are {selectedInmate.FirstName} {selectedInmate.LastName}'s friends: {string.Join(",", friendConnections)}.");
+
+        }
+
 
         //ANCA: Ability to add a new friend:
         //api/inmates/1/friends/5

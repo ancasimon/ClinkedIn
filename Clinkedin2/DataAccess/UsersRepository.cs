@@ -89,6 +89,28 @@ namespace Clinkedin2.DataAccess
             return friendNames;
         }
 
+        public Dictionary<string, List<string>> GetFriendsOfFriends(int id)
+        {
+            var allInmates = GetInmates();
+            var userLoggedIn = allInmates.First(i => i.Id == id);
+            var userFriends = userLoggedIn.Friends;
+            Dictionary<string, List<string>> friendsWithFriends = new Dictionary<string, List<string>>();
+            string friendName;
+            List<string> friendNames = new List<string>();
+            foreach (var person in userFriends)
+            {
+                friendName = person.FirstName.ToString();
+                friendNames.Add(friendName);
+                if (friendsWithFriends.ContainsKey(userLoggedIn.FirstName.ToString()))
+                    {
+                    return null;
+                }
+                friendsWithFriends.Add(userLoggedIn.FirstName.ToString(), friendNames);
+            }
+
+            return friendsWithFriends;
+        }
+
         //ANCA: Not using this one either ....SHOULD I BE??
         //public void AddFriend(int id, Inmate newFriend)
         //{
