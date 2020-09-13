@@ -55,14 +55,14 @@ namespace Clinkedin2.DataAccess
         }
 
 
-        public void GetServices(int id)
+        public List<string> GetServices(int id)
         {
-            var _inmate = _users.Where(user => user.Id == id);
-            Console.WriteLine(_inmate);
-            //var _inmateServices = _users.Where(user => _inmate == user.Interest && user.Id != id);
-            //return _inmate.ToList().First().GetAllServicesByInmate(id);
+            var inmateService = _users.First(user => user.Id == id);
+            var services = inmateService.Service;
+
+            return services.ToList();
         }
-     
+
 
         public User Update(int id, User user)
         {
