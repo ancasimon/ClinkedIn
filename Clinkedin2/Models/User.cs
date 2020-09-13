@@ -20,7 +20,12 @@ namespace Clinkedin2.Models
         public List<User> Friends { get; set; } = new List<User>();
         public List<User> Enemies { get; set; } = new List<User>();
         public string Interest { get; set; }
+        public string Service { get; set; }
 
+        internal void GetAllServicesByInmate(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

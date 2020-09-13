@@ -18,12 +18,13 @@ namespace Clinkedin2.Controllers
         static InmatesController()
         {
             _inmatesRepo = new UsersRepository();
+        
 
-            var inmatePiper = new Inmate { Id = 1, Age = 30, FirstName = "Piper", LastName = "Chapman", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<User>(), Enemies = new List<User>(), UserRole = UserRole.Inmate, Interest ="Sports", Services= "tutor"};
-            var inmateClaudette = new Inmate { Id = 2, Age = 50, FirstName = "Claudette", LastName = "Pelage", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<User>() { inmatePiper }, Enemies = new List<User>(), UserRole = UserRole.Inmate , Interest ="Music", Services = "legal" };
-            var inmateGalina = new Inmate { Id = 3, Age = 55, FirstName = "Galina", LastName = "Reznikov", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<User>() { inmateClaudette, inmatePiper }, Enemies = new List<User>(), UserRole = UserRole.Inmate , Interest = "Reading", Services = "trainer" };
-            var inmateJane = new Inmate { Id = 4, Age = 25, FirstName = "Jane", LastName = "Miller", Gender = Gender.Female, PrisonFacility = "Tennessee Prison for Women", Friends = new List<User>(), Enemies = new List<User>(), UserRole = UserRole.Inmate, Interest = "Cars", Services = "beautician" };
-            var inmateDahlia = new Inmate { Id = 5, Age = 42, FirstName = "Dahlia", LastName = "McLeary", Gender = Gender.Female, PrisonFacility = "Tennessee Prison for Women", Friends = new List<User>() { inmateJane }, Enemies = new List<User>(), UserRole = UserRole.Inmate, Interest = "Sports", Services = "writer" };
+            var inmatePiper = new Inmate { Id = 1, Age = 30, FirstName = "Piper", LastName = "Chapman", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<User>(), Enemies = new List<User>(), UserRole = UserRole.Inmate, Interest ="Sports", Service = "tutor"};
+            var inmateClaudette = new Inmate { Id = 2, Age = 50, FirstName = "Claudette", LastName = "Pelage", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<User>() { inmatePiper }, Enemies = new List<User>(), UserRole = UserRole.Inmate , Interest ="Music", Service = "writer" };
+            var inmateGalina = new Inmate { Id = 3, Age = 55, FirstName = "Galina", LastName = "Reznikov", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<User>() { inmateClaudette, inmatePiper }, Enemies = new List<User>(), UserRole = UserRole.Inmate , Interest = "Reading", Service = "beautician"};
+            var inmateJane = new Inmate { Id = 4, Age = 25, FirstName = "Jane", LastName = "Miller", Gender = Gender.Female, PrisonFacility = "Tennessee Prison for Women", Friends = new List<User>(), Enemies = new List<User>(), UserRole = UserRole.Inmate, Interest = "Cars", Service = "tutor" };
+            var inmateDahlia = new Inmate { Id = 5, Age = 42, FirstName = "Dahlia", LastName = "McLeary", Gender = Gender.Female, PrisonFacility = "Tennessee Prison for Women", Friends = new List<User>() { inmateJane }, Enemies = new List<User>(), UserRole = UserRole.Inmate, Interest = "Sports", Service = "writer" };
 
             _inmatesRepo.AddInmate(inmateDahlia);
             _inmatesRepo.AddInmate(inmateJane);
@@ -61,12 +62,12 @@ namespace Clinkedin2.Controllers
             return Ok(allInmates);
         }
 
-        /* [HttpGet]
-         public IActionResult GetAllServicesByInmate(User user)
+        [HttpGet("{id}/services")]
+        /* public IActionResult GetAllServicesByInmate(User user)
          {
-
-         }
-        */
+            return ;
+         }*/
+       
 
         [HttpPut("{id}")]
         public IActionResult UpdateInmate(int id, User inmate)

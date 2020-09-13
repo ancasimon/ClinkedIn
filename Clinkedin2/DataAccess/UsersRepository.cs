@@ -49,18 +49,20 @@ namespace Clinkedin2.DataAccess
             return _users;
         }
 
-/*        public List<Services> GetServices(int id)
-        {
-            var _inmate = _users.Where(user => user.Id == id);
-
-            return _inmate.ToList().First().GetAllServicesByInmate(id);
-        }*/
-
-
-        public User GetById(int id)
+           public User GetById(int id)
         {
             return _users.FirstOrDefault(user => user.Id == id);
         }
+
+
+        public void GetServices(int id)
+        {
+            var _inmate = _users.Where(user => user.Id == id);
+            Console.WriteLine(_inmate);
+            //var _inmateServices = _users.Where(user => _inmate == user.Interest && user.Id != id);
+            //return _inmate.ToList().First().GetAllServicesByInmate(id);
+        }
+     
 
         public User Update(int id, User user)
         {
