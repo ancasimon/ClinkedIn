@@ -94,18 +94,25 @@ namespace Clinkedin2.DataAccess
             var allInmates = GetInmates();
             var userLoggedIn = allInmates.First(i => i.Id == id);
             var userFriends = userLoggedIn.Friends;
+            List<User> friendsOfFriend = new List<User>();
+            string secondRemovedFriend;
             Dictionary<string, List<string>> friendsWithFriends = new Dictionary<string, List<string>>();
             string friendName;
             List<string> friendNames = new List<string>();
             foreach (var person in userFriends)
             {
                 friendName = person.FirstName.ToString();
-                friendNames.Add(friendName);
-                if (friendsWithFriends.ContainsKey(userLoggedIn.FirstName.ToString()))
+                friendsOfFriend = person.Friends;
+                foreach (var individual in friendsOfFriend)
+                {
+                    secondRemovedFriend = individual.FirstName.ToString();
+                    friendNames.Add(secondRemovedFriend);
+                }
+                if (friendsWithFriends.ContainsKey(friendName))
                     {
                     return null;
                 }
-                friendsWithFriends.Add(userLoggedIn.FirstName.ToString(), friendNames);
+                friendsWithFriends.Add(friendName,friendNames);
             }
 
             return friendsWithFriends;

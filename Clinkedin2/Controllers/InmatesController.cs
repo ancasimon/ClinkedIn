@@ -66,7 +66,7 @@ namespace Clinkedin2.Controllers
                 return NotFound($"{selectedInmate.FirstName} {selectedInmate.LastName} doesn't have any friends.");
             }
 
-            return Ok($"Here are {selectedInmate.FirstName} {selectedInmate.LastName}'s friends: {string.Join(",", friendConnections)}.");
+            return Ok($"Here are {selectedInmate.FirstName} {selectedInmate.LastName}'s friends: {friendConnections.Values}.");
 
         }
 
