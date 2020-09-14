@@ -98,6 +98,63 @@ namespace Clinkedin2.DataAccess
             return friendNames;
         }
 
+        //public Dictionary<string, List<string>> GetFriendsOfFriends(int id)
+        public List<string> GetFriendsOfFriends(int id)
+        {
+            var allInmates = GetInmates();
+            var myRecord = allInmates.First(i => i.Id == id);
+            var myFriends = myRecord.Friends;
+            List<User> friendsOfMyFriend = new List<User>();
+            Dictionary<string, List<string>> friendsWithMyFriends = new Dictionary<string, List<string>>();
+            //Dictionary<string, List<User>> friendsWithMyFriends = new Dictionary<string, List<User>>();
+
+            string friendName;
+            string connectedFriendName;
+            List<string> friendNames = new List<string>();
+            List<string> oneBigListOfFriendsOfMyFriends = new List<string>();
+            List<string> distictNamesInOneBigList = new List<string>();
+
+            foreach (var person in myFriends)
+            {
+                //Find my friends, create a string of each one's first names and capture their friends in a new list of users:
+                friendName = person.FirstName.ToString();
+                friendsOfMyFriend = person.Friends;
+                //Loop over the people in their list of friends:
+                //if(!friendsWithMyFriends.ContainsKey(friendName))
+                //{
+                //    foreach (var individual in friendsOfMyFriend)
+                //    {
+                //        //Turn each of the first names of my friend's friends into a string and add it to a list of strings:
+                //        connectedFriendName = individual.FirstName.ToString();
+                //        if (!friendNames.Contains(connectedFriendName))
+                //        {
+                //            friendNames.Add(connectedFriendName);
+                //        }
+                //    }
+                //}
+                
+                //ANCA: NEW WAY: just getting friends of friends in one single big list!!
+                foreach(var individual in friendsOfMyFriend)
+                {
+                    connectedFriendName = individual.FirstName.ToString();
+                    oneBigListOfFriendsOfMyFriends.Add(connectedFriendName);
+                    distictNamesInOneBigList = oneBigListOfFriendsOfMyFriends.Distinct().ToList();
+                }
+
+
+                //if (friendsWithMyFriends.ContainsKey(friendName))
+                //    {
+                //    //friendsWithMyFriends[friendName] = friendsWithMyFriends[friendName];
+                //    return friendsWithMyFriends;
+                //}
+                //friendsWithMyFriends.Add(friendName, friendNames);
+
+            }
+
+            //return friendsWithMyFriends;
+            return distictNamesInOneBigList;
+        }
+
         //ANCA: Not using this one either ....SHOULD I BE??
         //public void AddFriend(int id, Inmate newFriend)
         //{

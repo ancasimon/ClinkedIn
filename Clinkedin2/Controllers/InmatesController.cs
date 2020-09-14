@@ -22,8 +22,8 @@ namespace Clinkedin2.Controllers
             var inmatePiper = new Inmate { Id = 1, Age = 30, FirstName = "Piper", LastName = "Chapman", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<User>(), Enemies = new List<User>(), UserRole = UserRole.Inmate, SentenceStartDate = new DateTime(2015, 09, 20), SentenceEndDate = new DateTime(2020, 09, 20), Interest = "Sports", Service = new List<string>() { "tutor", "writer" } };
             var inmateClaudette = new Inmate { Id = 2, Age = 50, FirstName = "Claudette", LastName = "Pelage", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<User>() { inmatePiper }, Enemies = new List<User>(), UserRole = UserRole.Inmate, SentenceStartDate = new DateTime(2020, 01, 01), SentenceEndDate = new DateTime(2020, 12, 31), Interest = "Music", Service = new List<string>() { "beautician" } };
             var inmateGalina = new Inmate { Id = 3, Age = 55, FirstName = "Galina", LastName = "Reznikov", Gender = Gender.Female, PrisonFacility = "Litchfield Penitentiary", Friends = new List<User>() { inmateClaudette, inmatePiper }, Enemies = new List<User>(), UserRole = UserRole.Inmate, SentenceStartDate = new DateTime(2019, 01, 01), SentenceEndDate = new DateTime(2021, 12, 31), Interest = "Reading", Service = new List<string>() { "legal", "medical" } };
-            var inmateJane = new Inmate { Id = 4, Age = 25, FirstName = "Jane", LastName = "Miller", Gender = Gender.Female, PrisonFacility = "Tennessee Prison for Women", Friends = new List<User>(), Enemies = new List<User>(), UserRole = UserRole.Inmate, SentenceStartDate = new DateTime(2020, 09, 01), SentenceEndDate = new DateTime(2020, 09, 30), Interest = "Cars", Service = new List<string>() };
-            var inmateDahlia = new Inmate { Id = 5, Age = 42, FirstName = "Dahlia", LastName = "McLeary", Gender = Gender.Female, PrisonFacility = "Tennessee Prison for Women", Friends = new List<User>() { inmateJane }, Enemies = new List<User>(), UserRole = UserRole.Inmate, SentenceStartDate = new DateTime(2020, 08, 20), SentenceEndDate = new DateTime(2020, 09, 20), Interest = "Sports", Service = new List<string>() };
+            var inmateJane = new Inmate { Id = 4, Age = 25, FirstName = "Jane", LastName = "Miller", Gender = Gender.Female, PrisonFacility = "Tennessee Prison for Women", Friends = new List<User>() { inmateClaudette, inmatePiper, inmateGalina }, Enemies = new List<User>(), UserRole = UserRole.Inmate, SentenceStartDate = new DateTime(2020, 09, 01), SentenceEndDate = new DateTime(2020, 09, 30), Interest = "Cars", Service = new List<string>() };
+            var inmateDahlia = new Inmate { Id = 5, Age = 42, FirstName = "Dahlia", LastName = "McLeary", Gender = Gender.Female, PrisonFacility = "Tennessee Prison for Women", Friends = new List<User>() { inmateJane, inmateClaudette, inmatePiper, inmateGalina }, Enemies = new List<User>(), UserRole = UserRole.Inmate, SentenceStartDate = new DateTime(2020, 08, 20), SentenceEndDate = new DateTime(2020, 09, 20), Interest = "Sports", Service = new List<string>() };
 
 
             _inmatesRepo.AddInmate(inmateDahlia);
@@ -52,6 +52,66 @@ namespace Clinkedin2.Controllers
             var selectedInmateFriends = _inmatesRepo.GetMyFriends(id);
 
             return Ok($"Here are {selectedInmate.FirstName}'s friends: {string.Join(",", selectedInmateFriends)}.");
+
+        }
+
+        [HttpGet("{id}/friendconnections")]
+        public IActionResult ViewFriendsOfFriends(int id)
+        {
+            var selectedInmate = _inmatesRepo.GetById(id);
+            //Dictionary<string, List<string>> friendConnections = _inmatesRepo.GetFriendsOfFriends(id);
+            //ANCA: New way:
+            List<string> friendsOfFriends= _inmatesRepo.GetFriendsOfFriends(id);
+        
+            if (selectedInmate.Friends.Count == 0)
+            {
+                return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. Turns out I don't have any friends...");
+            }
+            else if(friendsOfFriends.Count == 0)
+            {
+                return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. My current friends have no other friends! What does that say about me?? ...");
+
+            }
+
+
+            //foreach ((string friend, List<string> friendNames) in friendConnections)
+            //{
+            //    if(friendNames.Count == 0)
+            //    { 
+            //        return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. My friend, {friend}, doesn't have any friends.");
+            //    }
+            //    string friendsList = string.Join(",", friendNames); //ANCA OUSTANDING: WHy are there duplicates in this list??
+
+            //    //return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. My friend, {friend} has the following friends: {string.Join(",", friendNames)}.");
+            //    return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. My friend, {friend} has the following friends: {friendsList}.");
+
+            //ANCA: OUTSTANDING : Why can I not get it to display info about reamining friends too? There are more for inmates 5, 4, 3!! and they do make it to the dictionary!!
+            //else
+            //{
+            //    //foreach (var individual in friendNames)
+            //    //{
+            //    //    if (individual.Friends.Count != 0)
+            //    //    {
+            //    //        return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. My friend, {friend}, is friends with {individual.FirstName} {individual.LastName}");
+
+            //    //    }
+            //    //    return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. My friend, {friend}, doesn't have any friends.");
+
+            //    //}
+            //}
+
+
+            //friendConnections.Select((inmate) => $"{inmate.Key} has the following friends: {inmate.Value}.");
+
+
+            //return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}.");
+            //foreach (User user in friendNames)
+            //{
+            //    return Ok($"My friend, {friend}, is friends with {user.FirstName} {user.LastName}.");
+            //}
+            //}
+
+            return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName} and here are all my friends' friends: {string.Join(",", friendsOfFriends)}.");
 
         }
 
