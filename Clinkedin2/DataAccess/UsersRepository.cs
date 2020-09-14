@@ -56,11 +56,20 @@ namespace Clinkedin2.DataAccess
             return _users;
         }
 
-
-        public User GetById(int id)
+           public User GetById(int id)
         {
             return _users.FirstOrDefault(user => user.Id == id);
         }
+
+
+        public List<string> GetServices(int id)
+        {
+            var inmateService = _users.First(user => user.Id == id);
+            var services = inmateService.Service;
+
+            return services.ToList();
+        }
+
 
         public User Update(int id, User user)
         {
