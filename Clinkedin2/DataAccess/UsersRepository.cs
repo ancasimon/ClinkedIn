@@ -101,30 +101,44 @@ namespace Clinkedin2.DataAccess
         public Dictionary<string, List<string>> GetFriendsOfFriends(int id)
         {
             var allInmates = GetInmates();
-            var userLoggedIn = allInmates.First(i => i.Id == id);
-            var userFriends = userLoggedIn.Friends;
-            List<User> friendsOfFriend = new List<User>();
-            string secondRemovedFriend;
-            Dictionary<string, List<string>> friendsWithFriends = new Dictionary<string, List<string>>();
+            var myRecord = allInmates.First(i => i.Id == id);
+            var myFriends = myRecord.Friends;
+            List<User> friendsOfMyFriend = new List<User>();
+            Dictionary<string, List<string>> friendsWithMyFriends = new Dictionary<string, List<string>>();
+            //Dictionary<string, List<User>> friendsWithMyFriends = new Dictionary<string, List<User>>();
+
             string friendName;
+            string connectedFriendName;
             List<string> friendNames = new List<string>();
-            foreach (var person in userFriends)
+            foreach (var person in myFriends)
             {
+                //Find my friends, create a string of each one's first names and capture their friends in a new list of users:
                 friendName = person.FirstName.ToString();
-                friendsOfFriend = person.Friends;
-                foreach (var individual in friendsOfFriend)
+                friendsOfMyFriend = person.Friends;
+                //Loop over the people in their list of friends:
+                if(!friendsWithMyFriends.ContainsKey(friendName))
                 {
-                    secondRemovedFriend = individual.FirstName.ToString();
-                    friendNames.Add(secondRemovedFriend);
-                }
-                if (friendsWithFriends.ContainsKey(friendName))
+                    foreach (var individual in friendsOfMyFriend)
                     {
-                    return null;
+                        //Turn each of the first names of my friend's friends into a string and add it to a list of strings:
+                        connectedFriendName = individual.FirstName.ToString();
+                        if (!friendNames.Contains(connectedFriendName))
+                        {
+                            friendNames.Add(connectedFriendName);
+                        }
+                    }
                 }
-                friendsWithFriends.Add(friendName,friendNames);
+                
+                //if (friendsWithMyFriends.ContainsKey(friendName))
+                //    {
+                //    //friendsWithMyFriends[friendName] = friendsWithMyFriends[friendName];
+                //    return friendsWithMyFriends;
+                //}
+                friendsWithMyFriends.Add(friendName, friendNames);
+
             }
 
-            return friendsWithFriends;
+            return friendsWithMyFriends;
         }
 
         //ANCA: Not using this one either ....SHOULD I BE??
