@@ -102,7 +102,7 @@ namespace Clinkedin2.Controllers
         {
             var services = _inmatesRepo.GetServices(id);
 
-            return Ok(services);
+            return Ok($"{services}");
         }
 
 
