@@ -153,5 +153,15 @@ namespace Clinkedin2.DataAccess
             userEnemies.Add(newEnemies);
 
         }
+        //this method updates an Inmate
+        public Inmate Update(int id, Inmate inmate)
+        {
+            var inmateToUpdate = GetById(id);
+
+           inmateToUpdate.Interest = inmate.Interest;
+           
+            return (Inmate)inmateToUpdate;
+        }
+
     }
 }

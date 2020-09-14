@@ -142,5 +142,12 @@ She has {remainingDays} days to go!!!");
                 return Ok($"{selectedInmate.FirstName} now has a new enemy ({newEnemies.FirstName} {newEnemies.LastName})!");
 
             }
+        //Update an inmate
+        [HttpPut("{id}/updateInterest")]
+        public IActionResult UpdateInmate(int id, Inmate inmate)
+        {
+            var updatedInmate = _inmatesRepo.Update(id, inmate);
+            return Ok(updatedInmate);
+        }
         }
     }
