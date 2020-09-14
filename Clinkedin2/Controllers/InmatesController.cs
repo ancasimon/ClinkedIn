@@ -78,7 +78,7 @@ namespace Clinkedin2.Controllers
         {
             var selectedInmate = _inmatesRepo.GetById(id);
             var newFriend = _inmatesRepo.GetById(newFriendId);
-            if (newFriend == null )
+            if (newFriend == null)
             {
                 return NotFound(); //Anca: Added some validation to make sure the new friend to be added is already in the network. 
             }
@@ -146,16 +146,24 @@ Her final day in the clink will be on {inmateClassRecord.SentenceEndDate}.
 She has {remainingDays} days to go!!!");
         }
 
-            //Monique added Enemy search 
-            [HttpPost("{id}/enemies/{newEnemiesId}")]
-            public IActionResult AddEnemies(int id, int newEnemiesId)
-            {
-                var selectedInmate = _inmatesRepo.GetById(id);
-                var newEnemies = _inmatesRepo.GetById(newEnemiesId);
-                selectedInmate.Enemies.Add(newEnemies);
+        //Monique added Enemy search 
+        [HttpPost("{id}/enemies/{newEnemiesId}")]
+        public IActionResult AddEnemies(int id, int newEnemiesId)
+        {
+            var selectedInmate = _inmatesRepo.GetById(id);
+            var newEnemies = _inmatesRepo.GetById(newEnemiesId);
+            selectedInmate.Enemies.Add(newEnemies);
 
-                return Ok($"{selectedInmate.FirstName} now has a new enemy ({newEnemies.FirstName} {newEnemies.LastName})!");
+            return Ok($"{selectedInmate.FirstName} now has a new enemy ({newEnemies.FirstName} {newEnemies.LastName})!");
 
-            }
+        }
+        //Update an inmate
+        [HttpPut("{id}/updateInterest")]
+        public IActionResult UpdateInmate(int id, Inmate inmate)
+        {
+            var selectedInmate = _inmatesRepo.GetById(id);
+            var updatedInmate = _inmatesRepo.Update(id, inmate);
+            return Ok($"{selectedInmate.FirstName}'s interest has now been updated to {selectedInmate.Interest}!");
         }
     }
+}
