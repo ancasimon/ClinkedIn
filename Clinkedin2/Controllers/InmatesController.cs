@@ -59,23 +59,26 @@ namespace Clinkedin2.Controllers
         public IActionResult ViewFriendsOfFriends(int id)
         {
             var selectedInmate = _inmatesRepo.GetById(id);
-            Dictionary<string, List<string>> friendConnections = _inmatesRepo.GetFriendsOfFriends(id);
+            //Dictionary<string, List<string>> friendConnections = _inmatesRepo.GetFriendsOfFriends(id);
+            //ANCA: New way:
+            List<string> friendsOfFriends= _inmatesRepo.GetFriendsOfFriends(id);
         
             if (selectedInmate.Friends.Count == 0)
             {
                 return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. Turns out I don't have any friends...");
             }
 
-            foreach ((string friend, List<string> friendNames) in friendConnections)
-            {
-                if(friendNames.Count == 0)
-                { 
-                    return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. My friend, {friend}, doesn't have any friends.");
-                }
-                string friendsList = string.Join(",", friendNames); //ANCA OUSTANDING: WHy are there duplicates in this list??
 
-                //return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. My friend, {friend} has the following friends: {string.Join(",", friendNames)}.");
-                return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. My friend, {friend} has the following friends: {friendsList}.");
+            //foreach ((string friend, List<string> friendNames) in friendConnections)
+            //{
+            //    if(friendNames.Count == 0)
+            //    { 
+            //        return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. My friend, {friend}, doesn't have any friends.");
+            //    }
+            //    string friendsList = string.Join(",", friendNames); //ANCA OUSTANDING: WHy are there duplicates in this list??
+
+            //    //return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. My friend, {friend} has the following friends: {string.Join(",", friendNames)}.");
+            //    return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. My friend, {friend} has the following friends: {friendsList}.");
 
                 //ANCA: OUTSTANDING : Why can I not get it to display info about reamining friends too? There are more for inmates 5, 4, 3!! and they do make it to the dictionary!!
                 //else
@@ -101,9 +104,9 @@ namespace Clinkedin2.Controllers
                 //{
                 //    return Ok($"My friend, {friend}, is friends with {user.FirstName} {user.LastName}.");
                 //}
-            }
+            //}
 
-            return NotFound();
+            return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName} and here are all my friends' friends: {string.Join(",", friendsOfFriends)}.");
 
         }
 
