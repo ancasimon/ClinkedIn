@@ -4,7 +4,12 @@
 ClinkedIn was our second group project, helping us incorporate all we had learned about Linq, Collections, and API calls in one assignment. 
 
 ## Individual Contributions
-My individual contributions included the ability to view an inmate's friends as well as the friends of any one of her current friends, the ability to add and remove a friend, the ability for wardens to create their warden user records and to see all inmates and their data, as well as the ability for each inmate to see her sentence details - start date, end date, and remaining days in the clinker!
+My individual contributions included:
+* the ability to view an inmate's friends 
+* the ability to see the friends of any one of an inmate's current friends
+* the ability to add and remove a friend
+* the ability for wardens to create their warden user records and to see all inmates and their data
+* the ability for each inmate to see her sentence details - start date, end date, and remaining days in the clinker!
 
 ## Lessons Learned
 I enjoyed learning to use Postman and the ease it brought to demoing our API calls. As a team, we continued to improve our mob programming skills. 
@@ -15,7 +20,7 @@ You are an intrepid entrepreneur in the niche social network space.  Your latest
 
 You'll be building this in teams, and we're only concerned with building the API right now. 
 
-## Example Repository Class
+### Example Repository Class
 
 ```csharp
 class ClinkedInRepository
@@ -36,7 +41,7 @@ class ClinkedInRepository
 
 Your first task as a team will be to break down the following requirements into smaller chunks.  You are welcome to work on some tasks together, but everyone will need to have commits with substance.
 
-# Requirements
+### Requirements
 
 As an incarcerated person
 
@@ -68,7 +73,7 @@ I want to keep track of my enemies
 
 So that I know who to watch out for
 
-# Stretch Goals
+### Stretch Goals
 
 As a ClinkedIn member
 
