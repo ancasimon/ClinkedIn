@@ -141,14 +141,6 @@ namespace Clinkedin2.DataAccess
                     distictNamesInOneBigList = oneBigListOfFriendsOfMyFriends.Distinct().ToList();
                 }
 
-
-                //if (friendsWithMyFriends.ContainsKey(friendName))
-                //    {
-                //    //friendsWithMyFriends[friendName] = friendsWithMyFriends[friendName];
-                //    return friendsWithMyFriends;
-                //}
-                //friendsWithMyFriends.Add(friendName, friendNames);
-
             }
 
             //return friendsWithMyFriends;
@@ -164,7 +156,7 @@ namespace Clinkedin2.DataAccess
         //    userFriends.Add(newFriend);
         //}
 
-        //ANCA: Added ability to delete a friend.BUT I Am not actually using it - shoudl I be?? Will delete it if this is ok. 
+        //ANCA: Added ability to delete a friend.BUT I am not actually using it - should I be?? Will delete it if this is ok. 
         //public void DeleteFriend(int id)
         //{
         //    var friendToDelete = GetById(id);
