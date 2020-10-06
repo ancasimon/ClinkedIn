@@ -35,7 +35,7 @@ namespace Clinkedin2.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateInmate(Inmate newInmate) //ANCA: Is there any way to prevent users from setting friends who are not in the network when creating a record??
+        public IActionResult CreateInmate(Inmate newInmate) 
         {
 
             _inmatesRepo.AddInmate(newInmate);
@@ -72,44 +72,6 @@ namespace Clinkedin2.Controllers
                 return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. My current friends have no other friends! What does that say about me?? ...");
 
             }
-
-
-            //foreach ((string friend, List<string> friendNames) in friendConnections)
-            //{
-            //    if(friendNames.Count == 0)
-            //    { 
-            //        return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. My friend, {friend}, doesn't have any friends.");
-            //    }
-            //    string friendsList = string.Join(",", friendNames); //ANCA OUSTANDING: WHy are there duplicates in this list??
-
-            //    //return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. My friend, {friend} has the following friends: {string.Join(",", friendNames)}.");
-            //    return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. My friend, {friend} has the following friends: {friendsList}.");
-
-            //ANCA: OUTSTANDING : Why can I not get it to display info about reamining friends too? There are more for inmates 5, 4, 3!! and they do make it to the dictionary!!
-            //else
-            //{
-            //    //foreach (var individual in friendNames)
-            //    //{
-            //    //    if (individual.Friends.Count != 0)
-            //    //    {
-            //    //        return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. My friend, {friend}, is friends with {individual.FirstName} {individual.LastName}");
-
-            //    //    }
-            //    //    return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}. My friend, {friend}, doesn't have any friends.");
-
-            //    //}
-            //}
-
-
-            //friendConnections.Select((inmate) => $"{inmate.Key} has the following friends: {inmate.Value}.");
-
-
-            //return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName}.");
-            //foreach (User user in friendNames)
-            //{
-            //    return Ok($"My friend, {friend}, is friends with {user.FirstName} {user.LastName}.");
-            //}
-            //}
 
             return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName} and here are all my friends' friends: {string.Join(",", friendsOfFriends)}.");
 
