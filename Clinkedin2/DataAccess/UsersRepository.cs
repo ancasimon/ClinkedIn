@@ -37,7 +37,7 @@ namespace Clinkedin2.DataAccess
             }
             _users.Add(newWarden);
         }
-        //ANCA Note on Sat: I changed this to a type of Inmate so that I can get the sentence info from the records. Hoping this is a right way to do this!
+        //ANCA Note: I changed this to a type of Inmate so that I can get the sentence info from the records.
         public List<Inmate> GetInmates() 
         {
             var _inmates = _users.Where(user => user.UserRole == UserRole.Inmate);
@@ -70,17 +70,6 @@ namespace Clinkedin2.DataAccess
             return services.ToList();
         }
 
-
-        public User Update(int id, User user)
-        {
-            var userToUpdate = _users.First(user => user.Id == id);
-            userToUpdate.DateOfBirth = user.DateOfBirth;
-            userToUpdate.FirstName = user.FirstName;
-            //Anca: Need to add all the user properties here!
-
-            return userToUpdate;
-        }
-
         //ANCA: Using the method below to display one's friends:
         public List<String> GetMyFriends(int id)
         {
@@ -98,7 +87,7 @@ namespace Clinkedin2.DataAccess
             return friendNames;
         }
 
-        //public Dictionary<string, List<string>> GetFriendsOfFriends(int id)
+        //Anca: get friends of friends:
         public List<string> GetFriendsOfFriends(int id)
         {
             var allInmates = GetInmates();
@@ -106,7 +95,6 @@ namespace Clinkedin2.DataAccess
             var myFriends = myRecord.Friends;
             List<User> friendsOfMyFriend = new List<User>();
             Dictionary<string, List<string>> friendsWithMyFriends = new Dictionary<string, List<string>>();
-            //Dictionary<string, List<User>> friendsWithMyFriends = new Dictionary<string, List<User>>();
 
             string friendName;
             string connectedFriendName;
@@ -119,54 +107,37 @@ namespace Clinkedin2.DataAccess
                 //Find my friends, create a string of each one's first names and capture their friends in a new list of users:
                 friendName = person.FirstName.ToString();
                 friendsOfMyFriend = person.Friends;
-                //Loop over the people in their list of friends:
-                //if(!friendsWithMyFriends.ContainsKey(friendName))
-                //{
-                //    foreach (var individual in friendsOfMyFriend)
-                //    {
-                //        //Turn each of the first names of my friend's friends into a string and add it to a list of strings:
-                //        connectedFriendName = individual.FirstName.ToString();
-                //        if (!friendNames.Contains(connectedFriendName))
-                //        {
-                //            friendNames.Add(connectedFriendName);
-                //        }
-                //    }
-                //}
                 
-                //ANCA: NEW WAY: just getting friends of friends in one single big list!!
+                //get friends of friends in one single big list!
                 foreach(var individual in friendsOfMyFriend)
                 {
                     connectedFriendName = individual.FirstName.ToString();
                     oneBigListOfFriendsOfMyFriends.Add(connectedFriendName);
                     distictNamesInOneBigList = oneBigListOfFriendsOfMyFriends.Distinct().ToList();
                 }
-
             }
 
-            //return friendsWithMyFriends;
             return distictNamesInOneBigList;
         }
 
-        //ANCA: Not using this one either ....SHOULD I BE??
-        //public void AddFriend(int id, Inmate newFriend)
-        //{
-        //    var userLoggedIn = _users.First(User => User.Id == id);
-        //    var userFriends = userLoggedIn.Friends;
+        //Anca: Ability to add a new friend:
+        public void AddFriend(int id, User newFriend)
+        {
+            var userLoggedIn = _users.First(User => User.Id == id);
+            var userFriends = userLoggedIn.Friends;
 
-        //    userFriends.Add(newFriend);
-        //}
+            userFriends.Add(newFriend);
+        }
 
-        //ANCA: Added ability to delete a friend.BUT I am not actually using it - should I be?? Will delete it if this is ok. 
-        //public void DeleteFriend(int id)
-        //{
-        //    var friendToDelete = GetById(id);
-        //    var userLoggedIn = _users.First(User => User.Id == id);
-        //    userLoggedIn.Friends.Remove(friendToDelete);
-        //}
+        //ANCA: Ability to delete a friend:
+        public void DeleteFriend(int id, User friendToDelete)
+        {
+            var userLoggedIn = _users.First(User => User.Id == id);
+            userLoggedIn.Friends.Remove(friendToDelete);
+        }
 
 
         //ANCA: Calculations for number of days since the sentence started and until it ends below. I am converting a User type to an Inmate type so that I can access Inmate-specific properties such as sentence dates.
-
         public int CalculateRemainingSentenceDays(int id)
         {
             var currentInmates = GetInmates();
@@ -189,6 +160,7 @@ namespace Clinkedin2.DataAccess
             return (int)daysCompleted;
         }
 
+        //Monique:
         public List<User> GetInterest(int id)//must pass this in
         {
             var userInterest = _users.FirstOrDefault(user => user.Id == id)?.Interest;//prevents null error
@@ -211,7 +183,7 @@ namespace Clinkedin2.DataAccess
             userEnemies.Add(newEnemies);
 
         }
-        //this method updates an Inmate interest
+        //Monique: this method updates an Inmate interest
         public Inmate Update(int id, Inmate inmate)
         {
             var inmateToUpdate = GetById(id);
