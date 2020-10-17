@@ -55,12 +55,11 @@ namespace Clinkedin2.Controllers
 
         }
 
+        //Anca: Ability to view your friends' friends:
         [HttpGet("{id}/friendconnections")]
         public IActionResult ViewFriendsOfFriends(int id)
         {
             var selectedInmate = _inmatesRepo.GetById(id);
-            //Dictionary<string, List<string>> friendConnections = _inmatesRepo.GetFriendsOfFriends(id);
-            //ANCA: New way:
             List<string> friendsOfFriends= _inmatesRepo.GetFriendsOfFriends(id);
         
             if (selectedInmate.Friends.Count == 0)
@@ -74,40 +73,37 @@ namespace Clinkedin2.Controllers
             }
 
             return Ok($"My name is {selectedInmate.FirstName} {selectedInmate.LastName} and here are all my friends' friends: {string.Join(",", friendsOfFriends)}.");
-
         }
 
 
         //ANCA: Ability to add a new friend:
-        //api/inmates/1/friends/5
         [HttpPost("{id}/friends/{newFriendId}")]
         public IActionResult AddFriend(int id, int newFriendId)
         {
             var selectedInmate = _inmatesRepo.GetById(id);
-            var newFriend = _inmatesRepo.GetById(newFriendId);
+            User newFriend = (Inmate)_inmatesRepo.GetById(newFriendId);
+
             if (newFriend == null)
             {
-                return NotFound(); //Anca: Added some validation to make sure the new friend to be added is already in the network. 
+                return NotFound();
             }
-            else
-            {
-                selectedInmate.Friends.Add(newFriend);
-            }
-            return Ok($"{selectedInmate.FirstName} now has a new friend ({newFriend.FirstName} {newFriend.LastName})!");
+            
+            _inmatesRepo.AddFriend(selectedInmate.Id, newFriend);
 
+             return Ok($"{selectedInmate.FirstName} now has a new friend ({newFriend.FirstName} {newFriend.LastName})!");
         }
 
-        //ANCA: Added ability to delete a friend: ANCA: THIS does not work if I add a friends manually to a new record!!!! it does not delete them... Logged a bug for it.
+        //ANCA: Added ability to delete a friend: Note: This does not work if I add a friends manually to a new record!!!! it does not delete them... Logged a bug for it.
         [HttpDelete("{id}/friends/{friendToDeleteId}")]
         public IActionResult DeleteFriend(int id, int friendToDeleteId)
         {
-            var selectedInmate = _inmatesRepo.GetById(id);
-            var friendToDelete = _inmatesRepo.GetById(friendToDeleteId);
+            User selectedInmate = _inmatesRepo.GetById(id);
+            User friendToDelete = _inmatesRepo.GetById(friendToDeleteId);
             if (friendToDelete == null)
             {
                 return NotFound();
             }
-            selectedInmate.Friends.Remove(friendToDelete);
+            _inmatesRepo.DeleteFriend(selectedInmate.Id, friendToDelete);
 
             return Ok($"{friendToDelete.FirstName} {friendToDelete.LastName} is no longer {selectedInmate.FirstName} {selectedInmate.LastName}'s friend. She'd better watch her back!");
         }
@@ -119,6 +115,7 @@ namespace Clinkedin2.Controllers
             return Ok(allInmates);
         }
 
+        //Beth:
         [HttpGet("{id}/services")]
         public IActionResult GetAllServicesByInmate(int id)
         {
@@ -126,17 +123,7 @@ namespace Clinkedin2.Controllers
             var services = _inmatesRepo.GetServices(id);
             string combindedString = string.Join("\n \t", services);
 
-
             return Ok($"{selectedUser.FirstName} will be offering these services:\n\t{combindedString}");
-        }
-
-
-        [HttpPut("{id}")]
-        public IActionResult UpdateInmate(int id, User inmate)
-        {
-            var updatedInmateRecord = _inmatesRepo.Update(id, inmate);
-
-            return Ok(updatedInmateRecord);
         }
 
 
@@ -176,7 +163,7 @@ She has {remainingDays} days to go!!!");
             return Ok($"{selectedInmate.FirstName} now has a new enemy ({newEnemies.FirstName} {newEnemies.LastName})!");
         }
 
-        //Update an inmate
+        //Monique: Update an inmate
         [HttpPut("{id}/updateInterest")]
         public IActionResult UpdateInmate(int id, Inmate inmate)
         {
